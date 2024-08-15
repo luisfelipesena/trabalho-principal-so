@@ -62,10 +62,9 @@ Este projeto é um simulador interativo de escalonamento de processos e gerencia
 
 O projeto inclui testes unitários para os algoritmos. Execute-os com `npm test`.
 
-## Contribuindo
+## Inputs de teste
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests com melhorias.
-
-## Licença
-
-Este projeto está sob a licença MIT.
+(FIFO)
+Processo 1 - Tempo de chegada: 0 - Tempo de execução: 10 - Deadline: 20
+Processo 2 - Tempo de chegada: 2 - Tempo de execução: 5 - Deadline: 15
+Processo 3 - Tempo de chegada: 4 - Tempo de execução: 8 - Deadline: 25

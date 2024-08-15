@@ -23,14 +23,11 @@ export function App() {
 		const newProcess = {
 			...process,
 			id: processes.length + 1,
-			pages: Array.from(
-				{ length: Math.min(process.pages.length, MAX_PAGES_PER_PROCESS) },
-				(_, index) => ({
-					id: index + 1,
-					processId: processes.length + 1,
-					inMemory: false,
-				}),
-			),
+			pages: Array.from({ length: process.pages.length }, (_, index) => ({
+				id: index + 1,
+				processId: processes.length + 1,
+				inMemory: false,
+			})),
 		};
 		setProcesses([...processes, newProcess]);
 	};

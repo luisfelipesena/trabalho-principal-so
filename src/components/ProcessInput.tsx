@@ -15,11 +15,11 @@ export function ProcessInput({ onAddProcess }: ProcessInputProps) {
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const newProcess: Process = {
-			id: 0, // Assign a unique ID
+			id: 0,
 			arrivalTime,
 			executionTime,
 			deadline,
-			pages: [],
+			pages: Array(numPages).fill(null),
 		};
 		onAddProcess(newProcess);
 		setArrivalTime(0);
