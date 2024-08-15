@@ -1,5 +1,5 @@
 export interface Page {
-  id: number;
-  processId: number;
-  inMemory: boolean;
+	id: number;
+	processId: number;
+	inMemory: boolean;
 }
