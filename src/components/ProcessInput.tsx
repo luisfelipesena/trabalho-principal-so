@@ -15,11 +15,15 @@ export function ProcessInput({ onAddProcess }: ProcessInputProps) {
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const newProcess: Process = {
-			id: 0,
+			id: 0, // This will be set in the App component
 			arrivalTime,
 			executionTime,
 			deadline,
-			pages: Array(numPages).fill(null),
+			pages: Array.from({ length: numPages }, (_, index) => ({
+				id: index + 1,
+				processId: 0, // This will be set in the App component
+				inMemory: false,
+			})),
 		};
 		onAddProcess(newProcess);
 		setArrivalTime(0);

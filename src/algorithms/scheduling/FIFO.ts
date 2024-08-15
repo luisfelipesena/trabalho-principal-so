@@ -16,15 +16,17 @@ export function FIFO(
 			currentTime = process.arrivalTime;
 		}
 
-		const executionEndTime = currentTime + process.executionTime;
+		const startTime = currentTime;
+		const endTime = startTime + process.executionTime;
+
 		executedProcesses.push({
 			...process,
-			startTime: currentTime,
-			endTime: executionEndTime,
-			waitingTime: currentTime - process.arrivalTime,
+			startTime,
+			endTime,
+			waitingTime: startTime - process.arrivalTime,
 		});
 
-		currentTime = executionEndTime + overhead;
+		currentTime = endTime + overhead;
 	}
 
 	return executedProcesses;

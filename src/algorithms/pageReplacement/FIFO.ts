@@ -9,10 +9,10 @@ export function FIFO(pages: Page[], ramSize: number): Page[] {
 			ramPages.push(page);
 			updatedPages.push({ ...page, inMemory: true });
 		} else {
-			const replacedPage = ramPages.shift()!;
+			const removedPage = ramPages.shift()!;
 			ramPages.push(page);
 			updatedPages.push(
-				{ ...replacedPage, inMemory: false },
+				{ ...removedPage, inMemory: false },
 				{ ...page, inMemory: true },
 			);
 		}

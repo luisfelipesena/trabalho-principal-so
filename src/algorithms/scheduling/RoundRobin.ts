@@ -5,34 +5,36 @@ export function RoundRobin(
 	quantum: number,
 	overhead: number,
 ): Process[] {
-	const sortedProcesses = [...processes].sort(
-		(a, b) => a.arrivalTime - b.arrivalTime,
-	);
+	const remainingProcesses = processes.map((p) => ({
+		...p,
+		remainingTime: p.executionTime,
+	}));
 	const executedProcesses: Process[] = [];
 	let currentTime = 0;
-	let currentProcessIndex = 0;
 
-	while (currentProcessIndex < sortedProcesses.length) {
-		const process = sortedProcesses[currentProcessIndex];
-		const executionTime = Math.min(process.executionTime, quantum);
+	while (remainingProcesses.length > 0) {
+		const process = remainingProcesses.shift()!;
 
 		if (currentTime < process.arrivalTime) {
 			currentTime = process.arrivalTime;
 		}
 
-		const executionEndTime = currentTime + executionTime;
+		const executionTime = Math.min(process.remainingTime, quantum);
+		const startTime = currentTime;
+		const endTime = startTime + executionTime;
+
 		executedProcesses.push({
 			...process,
-			startTime: currentTime,
-			endTime: executionEndTime,
-			waitingTime: currentTime - process.arrivalTime,
+			startTime,
+			endTime,
+			waitingTime: startTime - process.arrivalTime,
 		});
 
-		process.executionTime -= executionTime;
-		currentTime = executionEndTime + overhead;
+		process.remainingTime -= executionTime;
+		currentTime = endTime + overhead;
 
-		if (process.executionTime === 0) {
-			currentProcessIndex++;
+		if (process.remainingTime > 0) {
+			remainingProcesses.push(process);
 		}
 	}
 

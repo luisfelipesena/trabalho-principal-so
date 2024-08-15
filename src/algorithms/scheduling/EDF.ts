@@ -6,25 +6,40 @@ export function EDF(
 	overhead: number,
 ): Process[] {
 	const sortedProcesses = [...processes].sort(
-		(a, b) => a.deadline - b.deadline,
+		(a, b) => a.arrivalTime - b.arrivalTime,
 	);
 	const executedProcesses: Process[] = [];
 	let currentTime = 0;
 
-	for (const process of sortedProcesses) {
-		if (currentTime < process.arrivalTime) {
-			currentTime = process.arrivalTime;
+	while (sortedProcesses.length > 0) {
+		const availableProcesses = sortedProcesses.filter(
+			(p) => p.arrivalTime <= currentTime,
+		);
+
+		if (availableProcesses.length === 0) {
+			currentTime = sortedProcesses[0].arrivalTime;
+			continue;
 		}
 
-		const executionEndTime = currentTime + process.executionTime;
+		const earliestDeadline = availableProcesses.reduce((a, b) =>
+			a.deadline < b.deadline ? a : b,
+		);
+		const index = sortedProcesses.findIndex(
+			(p) => p.id === earliestDeadline.id,
+		);
+		sortedProcesses.splice(index, 1);
+
+		const startTime = currentTime;
+		const endTime = startTime + earliestDeadline.executionTime;
+
 		executedProcesses.push({
-			...process,
-			startTime: currentTime,
-			endTime: executionEndTime,
-			waitingTime: currentTime - process.arrivalTime,
+			...earliestDeadline,
+			startTime,
+			endTime,
+			waitingTime: startTime - earliestDeadline.arrivalTime,
 		});
 
-		currentTime = executionEndTime + overhead;
+		currentTime = endTime + overhead;
 	}
 
 	return executedProcesses;

@@ -4,16 +4,22 @@ import type { Page } from "../models/Page";
 interface MemoryUsageChartProps {
 	ram: Page[];
 	disk: Page[];
+	ramSize: number;
 }
 
-export function MemoryUsageChart({ ram, disk }: MemoryUsageChartProps) {
+export function MemoryUsageChart({
+	ram,
+	disk,
+	ramSize,
+}: MemoryUsageChartProps) {
 	const totalPages = ram.length + disk.length;
 	const ramPercentage = (ram.length / totalPages) * 100;
 	const diskPercentage = (disk.length / totalPages) * 100;
 
 	return (
 		<div>
-			<h2>Memory Usage Chart</h2>
+			<h2>Gráfico de Uso de Memória</h2>
+			<div>Tamanho da RAM: {ramSize / 1024} KB</div>
 			<div
 				style={{
 					display: "flex",
@@ -42,10 +48,10 @@ export function MemoryUsageChart({ ram, disk }: MemoryUsageChartProps) {
 						alignItems: "center",
 					}}
 				>
-					Disk ({disk.length})
+					Disco ({disk.length})
 				</div>
 			</div>
-			<div>Total Pages: {totalPages}</div>
+			<div>Total de Páginas: {totalPages}</div>
 		</div>
 	);
 }

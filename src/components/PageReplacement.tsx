@@ -16,10 +16,12 @@ export function PageReplacement({
 	onMemoryUpdate,
 }: PageReplacementProps) {
 	const [algorithm, setAlgorithm] = useState<"FIFO" | "LRU">("FIFO");
-	const [memoryState, setMemoryState] = useState<{ ram: Page[]; disk: Page[] }>({
-		ram: [],
-		disk: [],
-	});
+	const [memoryState, setMemoryState] = useState<{ ram: Page[]; disk: Page[] }>(
+		{
+			ram: [],
+			disk: [],
+		},
+	);
 
 	useEffect(() => {
 		const allPages = processes.flatMap((process) => process.pages);

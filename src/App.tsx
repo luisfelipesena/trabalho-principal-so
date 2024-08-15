@@ -13,7 +13,7 @@ export function App() {
 	const [processes, setProcesses] = useState<Process[]>([]);
 	const [quantum, setQuantum] = useState(1);
 	const [overhead, setOverhead] = useState(0);
-	const [ramSize] = useState(200 * 1024); // 200 KB
+	const [ramSize, setRamSize] = useState(200 * 1024); // 200 KB
 	const [scheduledProcesses, setScheduledProcesses] = useState<Process[]>([]);
 	const [memoryState, setMemoryState] = useState<{ ram: Page[]; disk: Page[] }>(
 		{ ram: [], disk: [] },
@@ -64,11 +64,20 @@ export function App() {
 					/>
 				</label>
 				<label>
-					Overhead:
+					Sobrecarga:
 					<input
 						type="number"
 						value={overhead}
 						onChange={(e) => setOverhead(Number(e.target.value))}
+					/>
+				</label>
+				<label>
+					Tamanho da RAM (KB):
+					<input
+						type="number"
+						value={ramSize / 1024}
+						onChange={(e) => setRamSize(Number(e.target.value) * 1024)}
+						min="1"
 					/>
 				</label>
 			</div>
@@ -84,7 +93,11 @@ export function App() {
 				onMemoryUpdate={handleMemoryUpdate}
 			/>
 			<GanttChart processes={scheduledProcesses} />
-			<MemoryUsageChart ram={memoryState.ram} disk={memoryState.disk} />
+			<MemoryUsageChart
+				ram={memoryState.ram}
+				disk={memoryState.disk}
+				ramSize={ramSize}
+			/>
 		</div>
 	);
 }
