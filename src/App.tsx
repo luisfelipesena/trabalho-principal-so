@@ -13,7 +13,7 @@ export function App() {
 	const [processes, setProcesses] = useState<Process[]>([]);
 	const [quantum, setQuantum] = useState(1);
 	const [overhead, setOverhead] = useState(0);
-	const [ramSize, setRamSize] = useState(200 * 1024); // 200 KB
+	const [ramSize, setRamSize] = useState(12 * 1024);
 	const [scheduledProcesses, setScheduledProcesses] = useState<Process[]>([]);
 	const [memoryState, setMemoryState] = useState<{ ram: Page[]; disk: Page[] }>(
 		{ ram: [], disk: [] },
